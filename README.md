@@ -55,7 +55,7 @@ CREATE TABLE articles (
 
 1.  Create a `.env` file with your MySQL credentials:
     
-    ```bash
+    ```python
     DB_HOST=localhost
     DB_NAME=ojs
     DB_USER=remote
@@ -65,16 +65,20 @@ CREATE TABLE articles (
 2.  Run the scraper:
     
     ```bash
-    python main.py
+    python app.py
     ```
     
 3.  Or run the scraper for a specific campus (source key):
 
     ```bash
-    python main.py scu
+    python app.py scu
     ```
 
     Replace `scu` with one of the available keys, for example: `ukdc`, `unpar`, `uwdp`, etc.
+
+    ```bash
+    python app.py --list
+    ```
 
 ## 🏫 Supported Universities
 
@@ -91,3 +95,17 @@ CREATE TABLE articles (
 *   **STIKVINC**: [https://journal.stikvinc.ac.id/index.php/jpk](https://journal.stikvinc.ac.id/index.php/jpk)
 *   **STIK Sint Carolus**: [https://jurnal.stik-sintcarolus.ac.id/cjon](https://jurnal.stik-sintcarolus.ac.id/cjon)
 *   **STIKES Elisabeth Medan**: [http://ejournal.stikeselisabethmedan.ac.id:85/index.php/EHJ/index](http://ejournal.stikeselisabethmedan.ac.id:85/index.php/EHJ/index)
+
+## Add a new OJS source
+
+You can add any source that supports OJS by editing the `sources.py` file:
+
+📄 [sources.py](https://github.com/IlhamriSKY/ojs-journal-scraper-aptik/blob/main/sources.py)
+
+Just add a new entry in the `sources` dictionary:
+
+```json
+("yourkey", "https://yourjournalwebsite.com/")
+```
+
+Optionally, map its domain in `university_mapping` for proper university name resolution.
