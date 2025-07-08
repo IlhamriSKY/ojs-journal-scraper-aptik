@@ -1,0 +1,11 @@
+# HTTP & scraping
+requests
+cloudscraper
+beautifulsoup4
+lxml
+
+# MySQL database connector
+mysql-connector-python
+
+# Environment variable loader
+python-dotenv

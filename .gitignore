@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# Logs and debug
+*.log
+*.sqlite3
+debug.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints (in case you add notebooks later)
+.ipynb_checkpoints/
+
+# PyCharm/VSCode project settings
+.idea/
+.vscode/
+
+# MySQL export dumps (optional)
+*.sql
+*.dump
+
+# Test cache
+.pytest_cache/
+coverage/
+htmlcov/
+
+# Output & temp
+tmp/
+temp/
+cache/
