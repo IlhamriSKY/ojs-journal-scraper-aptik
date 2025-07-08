@@ -5,19 +5,19 @@ from urllib.parse import urlparse
 from datetime import datetime
 import re
 from connection import Database
-from sources import university_mapping
 import ssl
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class OJSScraper:
-    def __init__(self, base_url, name):
-        self.base_url = base_url.rstrip('/')
+    def __init__(self, name, config):
         self.source_name = name
+        self.base_url = config["url"].rstrip('/')
+        self.university = config["university"]
         self.db = Database()
 
-        # Set up scraper with SSL context if needed
+        # SSL handling
         if not self.is_verify_ssl():
             context = ssl.create_default_context()
             context.check_hostname = False
@@ -26,7 +26,7 @@ class OJSScraper:
         else:
             self.scraper = cloudscraper.create_scraper()
 
-        # XML namespace mappings for OAI-PMH
+        # Namespace OAI-PMH
         self.namespaces = {
             "oai": "http://www.openarchives.org/OAI/2.0/",
             "dc": "http://purl.org/dc/elements/1.1/"
@@ -169,24 +169,16 @@ class OJSScraper:
             title = soup.find('title').text.strip()
             img_tag = soup.find('img')
             image_url = img_tag['src'] if img_tag and 'src' in img_tag.attrs else None
-            university = self.resolve_university()
             return {
                 'title': title,
                 'cover_image_url': image_url,
                 'journal_url': journal_url,
-                'university': university,
+                'university': self.university,
                 'status': 'active'
             }
         except Exception as e:
             print(f"[WARN] Failed to get journal info from {journal_url}: {e}")
             return None
-
-    def resolve_university(self):
-        parsed = urlparse(self.base_url)
-        domain = parsed.netloc.lower().split(':')[0]  # Hilangkan port jika ada
-        domain = domain.replace("www.", "")
-        domain = domain.replace("journal.", "").replace("ejournal.", "").replace("ojs.", "").replace("jurnal.", "").replace("e-journal.", "")
-        return university_mapping.get(domain, domain)
 
     def safe_get(self, elements):
         return elements[0].text.strip() if elements and elements[0].text else None
