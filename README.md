@@ -96,9 +96,9 @@ CREATE TABLE articles (
 *   **STIK Sint Carolus**: [https://jurnal.stik-sintcarolus.ac.id/cjon](https://jurnal.stik-sintcarolus.ac.id/cjon)
 *   **STIKES Elisabeth Medan**: [http://ejournal.stikeselisabethmedan.ac.id:85/index.php/EHJ/index](http://ejournal.stikeselisabethmedan.ac.id:85/index.php/EHJ/index)
 
-## Add a new OJS source
+## 📄 Add a new OJS source
 
-You can add any source that supports OJS by editing the 📄 [sources.py](https://github.com/IlhamriSKY/ojs-journal-scraper-aptik/blob/main/sources.py) file
+You can add any source that supports OJS by editing the [sources.py](https://github.com/IlhamriSKY/ojs-journal-scraper-aptik/blob/main/sources.py) file
 
 ```python
 ("yourkey", "https://yourjournalwebsite.com/")
