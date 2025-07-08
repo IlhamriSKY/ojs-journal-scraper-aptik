@@ -169,8 +169,7 @@ class OJSScraper:
             title = soup.find('title').text.strip()
             img_tag = soup.find('img')
             image_url = img_tag['src'] if img_tag and 'src' in img_tag.attrs else None
-            domain = self.extract_domain(journal_url)
-            university = self.resolve_university(domain)
+            university = self.resolve_university()
             return {
                 'title': title,
                 'cover_image_url': image_url,
@@ -182,12 +181,11 @@ class OJSScraper:
             print(f"[WARN] Failed to get journal info from {journal_url}: {e}")
             return None
 
-    def extract_domain(self, url):
-        parsed = urlparse(url)
-        domain = parsed.netloc
-        return domain.replace("journal.", "").replace("ejournal.", "").replace("ojs.", "").lower()
-
-    def resolve_university(self, domain):
+    def resolve_university(self):
+        parsed = urlparse(self.base_url)
+        domain = parsed.netloc.lower().split(':')[0]  # Hilangkan port jika ada
+        domain = domain.replace("www.", "")
+        domain = domain.replace("journal.", "").replace("ejournal.", "").replace("ojs.", "").replace("jurnal.", "").replace("e-journal.", "")
         return university_mapping.get(domain, domain)
 
     def safe_get(self, elements):
