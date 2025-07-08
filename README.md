@@ -98,13 +98,9 @@ CREATE TABLE articles (
 
 ## Add a new OJS source
 
-You can add any source that supports OJS by editing the `sources.py` file:
+You can add any source that supports OJS by editing the 📄 [sources.py](https://github.com/IlhamriSKY/ojs-journal-scraper-aptik/blob/main/sources.py) file
 
-📄 [sources.py](https://github.com/IlhamriSKY/ojs-journal-scraper-aptik/blob/main/sources.py)
-
-Just add a new entry in the `sources` dictionary:
-
-```json
+```python
 ("yourkey", "https://yourjournalwebsite.com/")
 ```
 
