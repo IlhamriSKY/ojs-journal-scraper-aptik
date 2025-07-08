@@ -10,7 +10,7 @@ Python 3.8 or higher is recommended.
 
 Install dependencies with:
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 Run this SQL script in your MySQL server:
 
-```
+```sql
 CREATE DATABASE IF NOT EXISTS ojs CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE ojs;
 
@@ -55,7 +55,7 @@ CREATE TABLE articles (
 
 1.  Create a `.env` file with your MySQL credentials:
     
-    ```
+    ```bash
     DB_HOST=localhost
     DB_NAME=ojs
     DB_USER=remote
@@ -64,10 +64,17 @@ CREATE TABLE articles (
     
 2.  Run the scraper:
     
-    ```
+    ```bash
     python main.py
     ```
     
+3.  Or run the scraper for a specific campus (source key):
+
+    ```bash
+    python main.py scu
+    ```
+
+    Replace `scu` with one of the available keys, for example: `ukdc`, `unpar`, `uwdp`, etc.
 
 ## 🏫 Supported Universities
 

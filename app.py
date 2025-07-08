@@ -1,21 +1,39 @@
 import time
+import argparse
 from scraper import OJSScraper
 from sources import sources
 
-def run_scraper():
+
+def run_scraper(selected_source=None):
     start_time = time.time()
-    print("Memulai proses scraping...\n")
+    print("Starting scraping process...\n")
 
     for name, url in sources.items():
-        print(f"[START] Mulai scraping: {name.upper()}")
+        if selected_source and name != selected_source:
+            continue  # skip other sources
+
+        print(f"[START] Scraping: {name.upper()}")
         scraper = OJSScraper(base_url=url, name=name)
         scraper.run()
-        print(f"[DONE] Selesai scraping: {name.upper()}\n")
+        print(f"[DONE] Finished: {name.upper()}\n")
 
     end_time = time.time()
     duration = end_time - start_time
     minutes, seconds = divmod(duration, 60)
-    print(f"Selesai! Total waktu: {int(minutes)} menit {seconds:.2f} detik.")
+    print(f"Finished all in {int(minutes)} minutes {seconds:.2f} seconds.")
+
 
 if __name__ == "__main__":
-    run_scraper()
+    parser = argparse.ArgumentParser(description="Run OJS journal scraper.")
+    parser.add_argument(
+        "source",
+        nargs="?",
+        help="Optional: specify a campus key to scrape only one (e.g. stikvinc, ukdc)"
+    )
+    args = parser.parse_args()
+
+    if args.source and args.source not in sources:
+        print(f"[ERROR] '{args.source}' is not a valid source key.")
+        print("Available keys:", ', '.join(sources.keys()))
+    else:
+        run_scraper(selected_source=args.source)
