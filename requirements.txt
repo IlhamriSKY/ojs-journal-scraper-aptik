@@ -3,6 +3,7 @@ requests
 cloudscraper
 beautifulsoup4
 lxml
+certifi
 
 # MySQL database connector
 mysql-connector-python

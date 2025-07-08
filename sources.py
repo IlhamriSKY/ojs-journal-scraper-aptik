@@ -2,12 +2,12 @@ from collections import OrderedDict
 
 sources = OrderedDict([
     ("unpar", "https://journal.unpar.ac.id/"),
-    ("uaj", "https://ejournal.atmajaya.ac.id/ejournalland/public/"),
+    ("uaj", "https://ejournal.atmajaya.ac.id"),
     ("ukwms", "https://journal.ukwms.ac.id/"),
     ("scu", "https://journal.unika.ac.id/"),
     ("uajy", "https://ojs.uajy.ac.id/"),
     ("usd", "https://e-journal.usd.ac.id/"),
-    ("unwira", "https://journal.unwira.ac.id/"), #Blocked By Cloudflare
+    ("unwira", "https://journal.unwira.ac.id/"),  # Blocked by Cloudflare
     ("ust", "https://ejournal.ust.ac.id/"),
     ("uwdp", "https://journal.widyadharma.ac.id/"),
     ("ukdc", "https://jurnal.ukdc.ac.id/"),

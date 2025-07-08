@@ -71,7 +71,7 @@ CREATE TABLE articles (
 3.  Or run the scraper for a specific campus (source key):
 
     ```bash
-    python app.py scu
+    python app.py scu ukdc
     ```
 
     Replace `scu` with one of the available keys, for example: `ukdc`, `unpar`, `uwdp`, etc.
