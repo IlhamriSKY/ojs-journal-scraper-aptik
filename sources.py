@@ -11,9 +11,9 @@ sources = OrderedDict([
     ("ust", "https://ejournal.ust.ac.id/"),
     ("uwdp", "https://journal.widyadharma.ac.id/"),
     ("ukdc", "https://jurnal.ukdc.ac.id/"),
-    ("stikvinc", "https://journal.stikvinc.ac.id/index.php/jpk"),
-    ("stikcarolus", "https://jurnal.stik-sintcarolus.ac.id/cjon"),
-    ("stikeselisabeth", "http://ejournal.stikeselisabethmedan.ac.id:85/index.php/EHJ/index")
+    ("stikvinc", "https://journal.stikvinc.ac.id"),
+    ("stikcarolus", "https://jurnal.stik-sintcarolus.ac.id"),
+    ("stikeselisabeth", "http://ejournal.stikeselisabethmedan.ac.id:85")
 ])
 
 

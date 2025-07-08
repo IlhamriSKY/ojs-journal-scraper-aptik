@@ -56,6 +56,9 @@ class OJSScraper:
                         if oai_url:
                             article_count = self.fetch_articles(oai_url, journal_id, journal_data['university'])
                             print(f"[DONE] {article_count} articles from '{journal}'")
+                        elif self.source_name == "stikvinc":
+                            article_count = self.fetch_articles_no_oai(journal_url, journal_id, journal_data['university'])
+                            print(f"[DONE] {article_count} articles from '{journal}' (no OAI)")
                         else:
                             print(f"[SKIP] OAI not available for '{journal}'")
                         self.db.commit()
@@ -79,6 +82,9 @@ class OJSScraper:
                     if oai_url:
                         article_count = self.fetch_articles(oai_url, journal_id, journal_data['university'])
                         print(f"[DONE] {article_count} articles from '{journal}'")
+                    elif self.source_name == "stikvinc":
+                        article_count = self.fetch_articles_no_oai(journal_url, journal_id, journal_data['university'])
+                        print(f"[DONE] {article_count} articles from '{journal}' (no OAI)")
                     else:
                         print(f"[SKIP] OAI not available for '{journal}'")
                     self.db.commit()
@@ -90,6 +96,10 @@ class OJSScraper:
         print(f"-- FINISHED scraping: {self.source_name.upper()} --")
 
     def get_journal_names(self):
+        # Special handling for known fixed-path journals
+        if self.source_name == "stikvinc":
+            return ['jpk']
+        
         try:
             resp = self.scraper.get(self.base_url, timeout=10, verify=self.is_verify_ssl())
             resp.raise_for_status()
@@ -112,6 +122,10 @@ class OJSScraper:
             return ['index']
 
     def get_valid_journal_url(self, journal):
+        # Special case for stikvinc
+        if self.source_name == "stikvinc":
+            return "https://journal.stikvinc.ac.id/index.php/jpk"
+
         urls = [
             f"{self.base_url}/index.php/{journal}/index",
             f"{self.base_url}/index.php/{journal}"
@@ -126,6 +140,9 @@ class OJSScraper:
         raise Exception(f"Cannot access journal page for {journal}")
 
     def get_valid_oai_url(self, journal):
+        if self.source_name == "stikvinc":
+            return None  # Tidak ada OAI endpoint
+
         if self.source_name == "ukwms":
             oai_url = f"{self.base_url}/oai"
             try:
@@ -286,4 +303,49 @@ class OJSScraper:
             except Exception as e:
                 print(f"[WARN] Failed to fetch articles from {oai_url}: {e}")
                 break
+        return total
+
+    def fetch_articles_no_oai(self, journal_url, journal_id, university):
+        total = 0
+        try:
+            resp = self.scraper.get(journal_url, timeout=10, verify=self.is_verify_ssl())
+            resp.raise_for_status()
+            soup = BeautifulSoup(resp.text, 'html.parser')
+
+            articles = soup.select('div.obj_issue_toc div.article-summary, div.obj_issue_toc div.obj_article_summary')
+            for article in articles:
+                title_tag = article.find('a')
+                if not title_tag:
+                    continue
+                article_title = title_tag.text.strip()
+                article_url = title_tag['href']
+
+                authors_tag = article.find('div', class_='authors')
+                authors = authors_tag.text.strip() if authors_tag else None
+
+                abstract = None
+                try:
+                    detail_resp = self.scraper.get(article_url, timeout=10, verify=self.is_verify_ssl())
+                    detail_resp.raise_for_status()
+                    detail_soup = BeautifulSoup(detail_resp.text, 'html.parser')
+                    abstract_tag = detail_soup.find('section', class_='item abstract')
+                    if abstract_tag:
+                        abstract = abstract_tag.text.strip()
+                except Exception as e:
+                    print(f"[WARN] Gagal ambil abstrak: {e}")
+
+                self.save_article({
+                    "journal_id": journal_id,
+                    "title": article_title,
+                    "authors": authors,
+                    "abstract": abstract,
+                    "article_url": article_url,
+                    "doi": None,
+                    "university": university
+                })
+                total += 1
+
+        except Exception as e:
+            print(f"[WARN] Gagal akses halaman jurnal langsung: {e}")
+        
         return total
