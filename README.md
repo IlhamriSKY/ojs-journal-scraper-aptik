@@ -1,6 +1,6 @@
 # OJS Journal Scraper
 
-This is a Python-based scraper for extracting metadata from academic journals hosted on **Open Journal Systems (OJS)**. It supports both OAI-PMH and HTML scraping, with Cloudflare bypassing using `cloudscraper`.
+This is a Python-based starter kit for scraping academic journal websites powered by Open Journal Systems (OJS). It supports both OAI-PMH and HTML scraping, with examples from several university journal websites, particularly from APTIK members, making it easy to adapt, extend, and customize for similar platforms or research purposes.
 
 ## 🧰 Python Version
 
