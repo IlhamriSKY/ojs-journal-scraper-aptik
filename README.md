@@ -102,7 +102,7 @@ CREATE TABLE articles (
 
 You can add any source that supports OJS by editing the [sources.py](https://github.com/IlhamriSKY/ojs-journal-scraper-aptik/blob/main/sources.py) file
 
-```python
+```json
     ("key", {
         "url": "website",
         "university": "Universitas Name"
