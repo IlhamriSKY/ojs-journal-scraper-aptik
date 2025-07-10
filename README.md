@@ -80,6 +80,8 @@ CREATE TABLE articles (
     python app.py --list
     ```
 
+    For get all sources
+
 ## 🏫 Supported Universities
 
 *   **UNPAR**: [https://journal.unpar.ac.id/](https://journal.unpar.ac.id/)
@@ -101,7 +103,10 @@ CREATE TABLE articles (
 You can add any source that supports OJS by editing the [sources.py](https://github.com/IlhamriSKY/ojs-journal-scraper-aptik/blob/main/sources.py) file
 
 ```python
-("yourkey", "https://yourjournalwebsite.com/")
+    ("key", {
+        "url": "website",
+        "university": "Universitas Name"
+    }),
 ```
 
 Optionally, map its domain in `university_mapping` for proper university name resolution.
